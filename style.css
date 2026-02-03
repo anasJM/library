@@ -1,4 +1,81 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    width: 50vw;
+    margin: auto;
+    padding-top: 50px;
+}
+
 th, td {
-    border: 2px solid black;
+    /* border: 1px solid white; */
     padding: 20px;
+}
+
+tr {
+    background-color: rgb(243, 243, 255);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* dialog */
+
+dialog {
+    border: 0;
+    border-radius: 20px;
+}
+
+::backdrop {
+    background-color: rgba(0, 0, 0, 0.248);
+}
+
+/* form */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 500px;
+    padding: 30px;
+}
+
+.inputBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input, select {
+    padding: 15px;
+    background-color: rgb(226, 226, 226);
+    border: 0;
+    border-radius: 10px;
+}
+
+/* buttons */
+
+.buttonBlock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button {
+    padding: 15px 30px;
+    border: 0;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: rgb(183, 183, 255);
+    color: rgb(40, 40, 146);
+    cursor: pointer;
+}
+
+#closeButton {
+    background-color: rgb(226, 226, 226);
+    color: rgb(30, 30, 30);
 }
