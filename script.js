@@ -33,35 +33,12 @@ function displayBooks(library) {
         <th>author</th>
         <th>pages</th>
         <th>readed?</th>
+        <th></th>
+        <th></th>
     </tr>
     `;
 
     for(let i = 0; i <= library.length - 1; i++) {
-        // let book = document.createElement('tr');
-
-        // let bookId = document.createElement('td');
-        // bookId.textContent = library[i].id;
-        // book.appendChild(bookId);
-
-        // let bookName = document.createElement('td');
-        // bookName.textContent = library[i].name;
-        // book.appendChild(bookName);
-
-        // let bookAuthor = document.createElement('td');
-        // bookAuthor.textContent = library[i].author;
-        // book.appendChild(bookAuthor);
-        
-        // let bookPages = document.createElement('td');
-        // bookPages.textContent = library[i].pages;
-        // book.appendChild(bookPages);
-
-        // let bookIsReaded = document.createElement('td');
-        // bookIsReaded.textContent = library[i].isReaded;
-        // book.appendChild(bookIsReaded);
-
-        // table.appendChild(book);
-
-
         const row = `
             <tr>
                 <td>${library[i].id}</td>
@@ -69,10 +46,12 @@ function displayBooks(library) {
                 <td>${library[i].author}</td>
                 <td>${library[i].pages}</td>
                 <td>${library[i].isReaded}</td>
+                <td><button data-id=${library[i].id} class="button remove-button">Remove</button></td>
+                <td><button data-id=${library[i].id} class="button readed-button">change status</button></td>
             </tr>
         `;
 
-        table.innerHTML += row; 
+        table.innerHTML += row;
     }
 }
 
@@ -105,8 +84,33 @@ const form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    addBookToLibrary(formData.get("name"), formData.get("author"), Number(formData.get("pages")), formData.get("read"));
+    addBookToLibrary(formData.get("name"), formData.get("author"), Number(formData.get("pages")), JSON.parse(formData.get("read")));
     console.table(myLibrary);
     displayBooks(myLibrary);
     dialog.close();
+})
+
+
+// remove book from library
+table.addEventListener("click", (e) => {
+    if (e.target.classList.contains("remove-button")) {
+        const index = myLibrary.findIndex((element) => element.id == e.target.dataset.id);
+        myLibrary.splice(index, 1);
+        displayBooks(myLibrary);
+        console.table(myLibrary);
+    }
+})
+
+// change book status
+table.addEventListener("click", (e) => {
+    if (e.target.classList.contains("readed-button")) {
+        const index = myLibrary.findIndex((element) => element.id == e.target.dataset.id);
+        if (myLibrary[index].isReaded === true) {
+            myLibrary[index].isReaded = false;
+        } else {
+            myLibrary[index].isReaded = true;
+        }
+        displayBooks(myLibrary);
+        console.table(myLibrary);
+    }
 })
