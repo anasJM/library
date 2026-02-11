@@ -1,31 +1,92 @@
-let myLibrary = [];
+// library's class
+class Library {
+    #books = [];
 
-// book object
-function Book(name, author, pages, isReaded) {
-    this.name = name;
-    this.author = author;
-    this.pages = pages;
-    this.isReaded = isReaded;
+    get books() {
+        return this.#books;
+    }
+
+    addBookToLibrary(book) {
+        this.#books.push(book);
+    }
 }
 
-// add book function
-function addBookToLibrary(name, author, pages, isReaded) {
-    const book = new Book(name, author, pages, isReaded);
-    book.id = crypto.randomUUID();
-    myLibrary.push(book);
+
+
+// book's class
+class Book {
+    #id;
+    #name;
+    #author;
+    #pages;
+    #isReaded;
+
+    // Book constructor
+    constructor(name, author, pages, isReaded) {
+        this.#id = crypto.randomUUID();
+        this.#name = name;
+        this.#author = author;
+        this.#pages = pages;
+        this.#isReaded = isReaded;
+    }
+    //getters
+    get id() {
+        return this.#id;
+    }
+
+    get name() {
+        return this.#name;
+    }
+
+    get author() {
+        return this.#author;
+    }
+
+    get pages() {
+        return this.#pages;
+    }
+
+    get isReaded() {
+        return this.#isReaded;
+    }
+
+    // setters
+    set name(name) {
+        this.#name = name;
+    }
+
+    set author(author) {
+        this.#author = author;
+    }
+
+    set pages(pages) {
+        this.#pages = pages;
+    }
+
+    set isReaded(isReaded) {
+        this.#isReaded = isReaded;
+    }
+
 }
 
-addBookToLibrary("Prince William", "By Garner, Valerie", 145, true);
-addBookToLibrary("The Missing Person", "Grumbach, Doris", 50, false);
-addBookToLibrary("Goat Brothers", "Colton, Larry", 223, false);
-addBookToLibrary("Shadow Song", "Kay, Terry", 63, false);
-console.table(myLibrary);
+// library intance
+const myLibrary = new Library();
+
+// books instances
+const book1 = new Book("Prince William", "By Garner, Valerie", 145, true);
+const book2 = new Book("Goat Brothers", "Colton, Larry", 223, false);
+const book3 = new Book("Shadow Song", "Kay, Terry", 63, false);
+
+// adding books to 
+myLibrary.addBookToLibrary(book1);
+myLibrary.addBookToLibrary(book2);
+myLibrary.addBookToLibrary(book3);
 
 // table selector
 let table = document.querySelector("table");
 
 // display all books
-function displayBooks(library) {
+function displayBooks(myLibrary) {
     table.innerHTML = `
     <tr>
         <th>#id</th>
@@ -38,16 +99,16 @@ function displayBooks(library) {
     </tr>
     `;
 
-    for(let i = 0; i <= library.length - 1; i++) {
+    for(let i = 0; i <= myLibrary.books.length - 1; i++) {
         const row = `
             <tr>
-                <td>${library[i].id}</td>
-                <td>${library[i].name}</td>
-                <td>${library[i].author}</td>
-                <td>${library[i].pages}</td>
-                <td>${library[i].isReaded}</td>
-                <td><button data-id=${library[i].id} class="button remove-button">Remove</button></td>
-                <td><button data-id=${library[i].id} class="button readed-button">change status</button></td>
+                <td>${myLibrary.books[i].id}</td>
+                <td>${myLibrary.books[i].name}</td>
+                <td>${myLibrary.books[i].author}</td>
+                <td>${myLibrary.books[i].pages}</td>
+                <td>${myLibrary.books[i].isReaded}</td>
+                <td><button data-id=${myLibrary.books[i].id} class="button remove-button">Remove</button></td>
+                <td><button data-id=${myLibrary.books[i].id} class="button readed-button">change status</button></td>
             </tr>
         `;
 
@@ -84,7 +145,8 @@ const form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    addBookToLibrary(formData.get("name"), formData.get("author"), Number(formData.get("pages")), JSON.parse(formData.get("read")));
+    const book = new Book(formData.get("name"), formData.get("author"), Number(formData.get("pages")), JSON.parse(formData.get("read")));
+    myLibrary.addBookToLibrary(book);
     console.table(myLibrary);
     displayBooks(myLibrary);
     dialog.close();
@@ -94,8 +156,8 @@ form.addEventListener("submit", (event) => {
 // remove book from library
 table.addEventListener("click", (e) => {
     if (e.target.classList.contains("remove-button")) {
-        const index = myLibrary.findIndex((element) => element.id == e.target.dataset.id);
-        myLibrary.splice(index, 1);
+        const index = myLibrary.books.findIndex((element) => element.id == e.target.dataset.id);
+        myLibrary.books.splice(index, 1);
         displayBooks(myLibrary);
         console.table(myLibrary);
     }
@@ -104,11 +166,11 @@ table.addEventListener("click", (e) => {
 // change book status
 table.addEventListener("click", (e) => {
     if (e.target.classList.contains("readed-button")) {
-        const index = myLibrary.findIndex((element) => element.id == e.target.dataset.id);
-        if (myLibrary[index].isReaded === true) {
-            myLibrary[index].isReaded = false;
+        const index = myLibrary.books.findIndex((element) => element.id == e.target.dataset.id);
+        if (myLibrary.books[index].isReaded === true) {
+            myLibrary.books[index].isReaded = false;
         } else {
-            myLibrary[index].isReaded = true;
+            myLibrary.books[index].isReaded = true;
         }
         displayBooks(myLibrary);
         console.table(myLibrary);
