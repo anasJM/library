@@ -11,8 +11,6 @@ class Library {
     }
 }
 
-
-
 // book's class
 class Book {
     #id;
@@ -118,8 +116,6 @@ function displayBooks(myLibrary) {
 
 displayBooks(myLibrary);
 
-
-
 // dialog selector
 const dialog = document.querySelector("dialog");
 
@@ -138,28 +134,53 @@ closeButton.addEventListener("click", () => {
     dialog.close();
 });
 
-
-
 // check form validation
 const nameInput = document.querySelector("#name")
 const authorInput = document.querySelector("#author")
 const pagesInput = document.querySelector("#pages")
 
-// nameInput.addEventListener("submit", () => {
-//     if (nameInput.validity.valueMissing) {
-//         nameInput.setCustomValidity("The book name must be filled!")
-//     } else {
-//         nameInput.setCustomValidity("")
-//     }
-// })
+nameInput.addEventListener("input", () => {
+    if (nameInput.validity.valueMissing) {
+        nameInput.setCustomValidity("The book name must be filled!")
+    } else if (nameInput.validity.typeMismatch) {
+        nameInput.setCustomValidity("type mismatch!")
+    } else {
+        nameInput.setCustomValidity("")
+    }
 
-// authorInput.addEventListener("submit", () => {
-//     if (authorInput.validity.valueMissing) {
-//         authorInput.setCustomValidity("The author name must be filled!")
-//     } else {
-//         authorInput.setCustomValidity("")
-//     }
-// })
+    if (!nameInput.checkValidity()) {
+        nameInput.reportValidity(); // show errors
+        return;
+    }
+})
+
+authorInput.addEventListener("input", () => {
+    if (authorInput.validity.valueMissing) {
+        authorInput.setCustomValidity("The author name must be filled!")
+    } else {
+        authorInput.setCustomValidity("")
+    }
+
+    if (!authorInput.checkValidity()) {
+        authorInput.reportValidity(); // show errors
+        return;
+    }
+})
+
+pagesInput.addEventListener("input", () => {
+    if (pagesInput.validity.valueMissing) {
+        pagesInput.setCustomValidity("The author name must be filled!")
+    } else if (pagesInput.value == 0) {
+        pagesInput.setCustomValidity("must be greater or equal than 1")
+    } else {
+        pagesInput.setCustomValidity("")
+    }
+
+    if (!pagesInput.checkValidity()) {
+        pagesInput.reportValidity(); // show errors
+        return;
+    }
+})
 
 // add the book to library
 const form = document.querySelector("form");
