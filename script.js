@@ -99,7 +99,7 @@ function displayBooks(myLibrary) {
     </tr>
     `;
 
-    for(let i = 0; i <= myLibrary.books.length - 1; i++) {
+    for (let i = 0; i <= myLibrary.books.length - 1; i++) {
         const row = `
             <tr>
                 <td>${myLibrary.books[i].id}</td>
@@ -139,11 +139,37 @@ closeButton.addEventListener("click", () => {
 });
 
 
-// get the form data and add the book to library
+
+// check form validation
+const nameInput = document.querySelector("#name")
+const authorInput = document.querySelector("#author")
+const pagesInput = document.querySelector("#pages")
+
+// nameInput.addEventListener("submit", () => {
+//     if (nameInput.validity.valueMissing) {
+//         nameInput.setCustomValidity("The book name must be filled!")
+//     } else {
+//         nameInput.setCustomValidity("")
+//     }
+// })
+
+// authorInput.addEventListener("submit", () => {
+//     if (authorInput.validity.valueMissing) {
+//         authorInput.setCustomValidity("The author name must be filled!")
+//     } else {
+//         authorInput.setCustomValidity("")
+//     }
+// })
+
+// add the book to library
 const form = document.querySelector("form");
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
+    if (!form.checkValidity()) {
+        form.reportValidity(); // show errors
+        return;
+    }
     const formData = new FormData(form);
     const book = new Book(formData.get("name"), formData.get("author"), Number(formData.get("pages")), JSON.parse(formData.get("read")));
     myLibrary.addBookToLibrary(book);

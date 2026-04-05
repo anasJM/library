@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
+
 <body>
     <div class="container">
 
@@ -29,17 +31,17 @@
             <form action="" method="get">
                 <div class="inputBlock">
                     <label for="name">What's the name of the book</label>
-                    <input type="text" id="name" name="name" class="input">
+                    <input type="text" id="name" name="name" class="input" required>
                 </div>
 
                 <div class="inputBlock">
                     <label for="author">What's the author of the book</label>
-                    <input type="text" id="author" name="author" class="input">
+                    <input type="text" id="author" name="author" class="input" required>
                 </div>
 
                 <div class="inputBlock">
                     <label for="pages">How many pages ?</label>
-                    <input type="number" id="pages" name="pages" class="input">
+                    <input type="number" id="pages" name="pages" class="input" min="1" required>
                 </div>
 
                 <div class="inputBlock">
@@ -49,14 +51,15 @@
                         <option value="false">Not Yet</option>
                     </select>
                 </div>
-                
+
                 <div class="buttonBlock">
                     <button type="submit" class="button">Add book</button>
                     <button class="button" id="closeButton" type="button">Close</button>
                 </div>
-            </form>  
+            </form>
         </dialog>
-        
+
     </div>
 </body>
+
 </html>
